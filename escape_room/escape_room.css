@@ -56,6 +56,24 @@ p {
     border-radius: 8px;
     margin: 20px 0;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Changed to relative for better positioning of messageContainer */
+}
+
+#messageContainer {
+    position: absolute;
+    top: 10px; /* Positioned at the top */
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    background-color: rgba(5, 5, 5, 0.5);
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+#gameMessage {
+    margin: 0;
 }
 
 footer {
