@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simpsonsの家</title>
+<script src="three.min.js"></script>
+
+<style type="text/css">
+div#canvas-frame{
+    border: none;
+    cursor: pointer;
+    width: 900px;
+    height: 600px;
+    background-color: #EEEEEE;
+}
+</style>
+<script>
+    var renderer;
+    function initThree() {
+        width = document.getElementById('canvas-frame').clientWidth;
+        height = document.getElementById('canvas-frame').clientHeight;
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(width, height );
+        document.getElementById('canvas-frame').appendChild(renderer.domElement);
+        renderer.setClearColorHex(0xffffff, 1.0);
+        
+    }
+
+    var camera;
+    //var controls;
+    var radian;
+    function initCamera() {
+        camera = new THREE.PerspectiveCamera( 45 , width / height , 1 , 10000 );
+        camera.position.x = 0;
+        camera.position.y = 200;
+        camera.position.z = -700;
+        camera.up.x = 0;
+        camera.up.y = 1;
+        camera.up.z = 0;//z軸が上
+        camera.lookAt(new THREE.Vector3(0,0,0))
+        
+        //controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    }
+    
+    var scene;
+    function initScene() {
+        scene = new THREE.Scene();
+        
+    }
+    var light;
+    function initLight() {
+        light = new THREE.DirectionalLight(0xFFFFFF, 1.0, 0);
+        light.position.set( 200, 250, -300 );
+        light2 = new THREE.PointLight(0xcccccc, 2.0, 0, Math.PI/4, 1);
+        light2.position.set(-160,0,280);
+        light3 = new THREE.PointLight(0xcccccc, 2.0, 0, Math.PI/4, 1);
+        light3.position.set(150,-40,280);
+        
+        scene.add(light);
+    }
+    var p = 1;
+    function Right() {
+        camera.position.x = -700*Math.sin(p/6);
+        camera.position.z = -700*Math.cos(p/6);
+        p ++;
+        camera.lookAt(new THREE.Vector3(0,0,0))
+    }
+    
+    
+
+    var cube,tube1,tube2;
+    var donut = new THREE.Group();
+    var background = new THREE.Group();
+    var dough, pink;
+    var blue = Array();
+    var yellow = Array();
+    var green = Array();
+    var white = Array();
+    var marge = new THREE.Group();
+    var tv = new THREE.Group();
+    var tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8,tv9,tv10,tv11;
+    var face,l_eye,r_eye,lb_eye,rb_eye,nose,nose2,neck,mouse1,mouse2,shoulder,l_ear,r_ear,l_arm,r_arm,l_leg,r_leg,l_shoe,r_shoe,l_heel,r_heel,hand,body;
+    var eyelash = Array();
+    var hair1 = Array();
+    var hair2 = Array();
+    var hair3 = Array();
+    var hair4 = Array();
+    var hair5 = Array();
+    var hair6 = Array();
+    var hair7 = Array();
+    var hair8 = Array();
+    var hair9 = Array();
+    var hair10 = Array();
+    var hair11 = Array();
+    var hair12 = Array();
+    var hair13 = Array();
+    var hair14 = Array();
+    var neckless = Array();
+    var sofa = new THREE.Group();
+    var sofa1,sofa2,sofa3,sofa4,sofa5,sofa6,sofa7,sofa8,sofa9,sofa10;
+    var floor_stand = new THREE.Group();
+    var fs1,fs2,fs3,fs4;
+    var picture = new THREE.Group();
+    var frame1,frame2,frame3,frame4,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,pic10,pic11,pic12;
+    var table = new THREE.Group();
+    var table1,table2,table3,table4,table5,table6,table7,table8,table9,table10,table11,table12,book1,book2,book3;
+    var table_stand = new THREE.Group();
+    var ts1,ts2,ts3,ts4,ts5;
+    var phone = new THREE.Group();
+    var phone1,phone2,phone3,phone4,phone5,phone6,phone7;
+    var button = Array();
+    var floor,pink_floor,purple_floor,yellow_floor,wall1,wall2;
+    function initObject(){
+        //背景
+        floor = new THREE.Mesh(
+            new THREE.CubeGeometry(600, 10,600),                
+            new THREE.MeshLambertMaterial({color: 0x00ffea})
+        );
+        wall1 = new THREE.Mesh(
+            new THREE.CubeGeometry(600, 300,10),                
+            new THREE.MeshBasicMaterial({color: 0xffc0cb})
+        );
+        
+        wall2 = new THREE.Mesh(
+            new THREE.CubeGeometry(10, 300,600),                
+            new THREE.MeshBasicMaterial({color: 0xffc0cb})
+        );
+        
+        pink_floor = new THREE.Mesh(
+            new THREE.CylinderGeometry(150,150,1, 40),                
+            new THREE.MeshLambertMaterial({color: 0xff82b2})
+        );
+        purple_floor = new THREE.Mesh(
+            new THREE.CylinderGeometry(100, 100,1,40),                
+            new THREE.MeshPhongMaterial({color: 0xb384ff})
+        );
+        yellow_floor = new THREE.Mesh(
+            new THREE.CylinderGeometry(70,70,1, 40),                
+            new THREE.MeshPhongMaterial({color: 0xffff00})
+        );
+        //Phone
+        phone1 = new THREE.Mesh(
+            new THREE.CubeGeometry(30,5,30),                
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        phone2 = new THREE.Mesh(
+            new THREE.CubeGeometry(30,5,30.5),                
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        phone3 = new THREE.Mesh(
+            new THREE.CubeGeometry(30,9,10),                
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        phone4 = new THREE.Mesh(
+            new THREE.CubeGeometry(30,5,10),                
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        phone5 = new THREE.Mesh(
+            new THREE.CylinderGeometry(3.5,3.5,27,30),                
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        phone6 = new THREE.Mesh(
+            new THREE.CylinderGeometry(5,7,8,30),                
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        phone7 = new THREE.Mesh(
+            new THREE.CylinderGeometry(5,7,8,30),               
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        for(var i=0; i<9; i++){
+            button[i] = new THREE.Mesh(
+                new THREE.CubeGeometry(4,2,4),
+                new THREE.MeshBasicMaterial({color: 0xffffff})
+            );
+            phone.add(button[i]);
+        }
+        phone.add(phone1,phone2,phone3,phone4,phone5,phone6,phone7);
+        //Table Stand
+        ts1 = new THREE.Mesh(
+            new THREE.CylinderGeometry(10,10,30,30),                
+            new THREE.MeshLambertMaterial({color: 0xffa500})
+        );
+        ts2 = new THREE.Mesh(
+            new THREE.SphereGeometry(10,30,30),                
+            new THREE.MeshLambertMaterial({color: 0x3cb371})
+        );
+        ts3 = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,2,40,30),                
+            new THREE.MeshLambertMaterial({color: 0x3cb371})
+        );
+        ts4 = new THREE.Mesh(
+            new THREE.CylinderGeometry(10,20,30,40),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        table_stand.add(ts1,ts2,ts3,ts4);
+        //table
+        table1 = new THREE.Mesh(
+            new THREE.CubeGeometry(60,5,80),                
+            new THREE.MeshLambertMaterial({color: 0xda70d6})
+        );
+        table2 = new THREE.Mesh(
+            new THREE.CubeGeometry(50,60,5),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        table3 = new THREE.Mesh(
+            new THREE.CubeGeometry(5,60,70),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        table4 = new THREE.Mesh(
+            new THREE.CubeGeometry(5,60,70),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        table5 = new THREE.Mesh(
+            new THREE.CubeGeometry(50,20,5),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        table6 = new THREE.Mesh(
+            new THREE.CubeGeometry(50,3,65),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        var table_material1 = new THREE.LineBasicMaterial({ color:0x000000});
+        var table_geometry1 = new THREE.Geometry();
+        table_geometry1.vertices.push(
+            new THREE.Vector3(159.5,-88,205),
+            new THREE.Vector3(119.5,-88,205),
+        );
+        table7 = new THREE.Line(table_geometry1, table_material1);
+        var table_material2 = new THREE.LineBasicMaterial({ color:0x000000});
+        var table_geometry2 = new THREE.Geometry();
+        table_geometry2.vertices.push(
+            new THREE.Vector3(159.5,-75,205),
+            new THREE.Vector3(119.5,-75,205),
+        );
+        table8 = new THREE.Line(table_geometry2, table_material2);
+        var table_material3 = new THREE.LineBasicMaterial({ color:0x000000});
+        var table_geometry3 = new THREE.Geometry();
+        table_geometry3.vertices.push(
+            new THREE.Vector3(159.5,-75,205),
+            new THREE.Vector3(159.5,-88,205),
+        );
+        table9 = new THREE.Line(table_geometry3, table_material3);
+        var table_material4 = new THREE.LineBasicMaterial({ color:0x000000});
+        var table_geometry4 = new THREE.Geometry();
+        table_geometry4.vertices.push(
+            new THREE.Vector3(119.5,-75,205),
+            new THREE.Vector3(119.5,-88,205),
+        );
+        table10 = new THREE.Line(table_geometry4, table_material4);
+        table11 = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,2,5,30),                
+            new THREE.MeshLambertMaterial({color: 0x00ffff})
+        );
+        table12 = new THREE.Mesh(
+            new THREE.CubeGeometry(40,10,2),                
+            new THREE.MeshLambertMaterial({color: 0x00ffff})
+        );
+        book1 = new THREE.Mesh(
+            new THREE.CubeGeometry(5,22,30),                
+            new THREE.MeshLambertMaterial({color: 0xffa07a})
+        );
+        book2 = new THREE.Mesh(
+            new THREE.CubeGeometry(4,22,30),                
+            new THREE.MeshLambertMaterial({color: 0x40e0d0})
+        );
+        book3 = new THREE.Mesh(
+            new THREE.CubeGeometry(4,22,30),                
+            new THREE.MeshLambertMaterial({color: 0x00bfff})
+        );
+        table.add(table1,table2,table3,table4,table5,table6,table7,table8,table9,table10,table11,table12,book1,book2,book3);
+        //picture
+        frame1 = new THREE.Mesh(
+            new THREE.CubeGeometry(120,10,10),                
+            new THREE.MeshPhongMaterial({color: 0xdaa520})
+        );
+        frame2 = new THREE.Mesh(
+            new THREE.CubeGeometry(120,10,10),                
+            new THREE.MeshPhongMaterial({color: 0xdaa520})
+        );
+        frame3 = new THREE.Mesh(
+            new THREE.CubeGeometry(10,70,10),                
+            new THREE.MeshPhongMaterial({color: 0xdaa520})
+        );
+        frame4 = new THREE.Mesh(
+            new THREE.CubeGeometry(10,70,10),                
+            new THREE.MeshPhongMaterial({color: 0xdaa520})
+        );
+        pic1 = new THREE.Mesh(
+            new THREE.CubeGeometry(100,70,0.1),                
+            new THREE.MeshBasicMaterial({color: 0x80dfff})
+        );
+        pic2 = new THREE.Mesh(
+            new THREE.CubeGeometry(100,25,0.1),                
+            new THREE.MeshLambertMaterial({color: 0x0080ff})
+        );
+        pic3 = new THREE.Mesh(
+            new THREE.CubeGeometry(50,10,0.1),                
+            new THREE.MeshBasicMaterial({color: 0xff7f50})
+        );
+        pic4 = new THREE.Mesh(
+            new THREE.CubeGeometry(2,25,0.1),                
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        var sail1 = new THREE.Geometry();
+        var v11 = new THREE.Vector3(5,64,284.8);
+        var v12 = new THREE.Vector3(20,67,284.8);
+        var v13 = new THREE.Vector3(1,85,284.8);
+        sail1.vertices.push(v11);
+        sail1.vertices.push(v12);
+        sail1.vertices.push(v13);
+        sail1.faces.push(new THREE.Face3(0, 2, 1));
+        var pic5_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
+        pic5 =  new THREE.Mesh(sail1,pic5_mat);
+        var sail2 = new THREE.Geometry();
+        var v21 = new THREE.Vector3(-20,67,284.8);
+        var v22 = new THREE.Vector3(-5,64,284.8);
+        var v23 = new THREE.Vector3(-1,85,284.8);
+        sail2.vertices.push(v21);
+        sail2.vertices.push(v22);
+        sail2.vertices.push(v23);
+        sail2.faces.push(new THREE.Face3(0, 2, 1));
+        var pic6_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
+        pic6 =  new THREE.Mesh(sail2,pic6_mat);
+        pic7 = new THREE.Mesh(
+            new THREE.CircleGeometry(5,40),             
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        pic8 = new THREE.Mesh(
+            new THREE.CircleGeometry(3,40),             
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        pic9 = new THREE.Mesh(
+            new THREE.CircleGeometry(2,40),             
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        pic10 = new THREE.Mesh(
+            new THREE.CircleGeometry(6,40),             
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        pic11 = new THREE.Mesh(
+            new THREE.CircleGeometry(4,40),             
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        pic12 = new THREE.Mesh(
+            new THREE.CircleGeometry(2,40),             
+            new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        picture.add(frame1,frame2,frame3,frame4,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,pic10,pic11,pic12);
+        //Floor Stand
+        fs1 = new THREE.Mesh(
+            new THREE.CylinderGeometry(15,25,35,40),                
+            new THREE.MeshLambertMaterial({color: 0xffa500})
+        );
+        fs2 = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,2,160,40),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        fs3 = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,20,10,40),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        var path6 = new THREE.SplineCurve3([
+            new THREE.Vector3(-165,40,200),
+            new THREE.Vector3(-170, 60, 200),
+            new THREE.Vector3(-185, 60, 200),
+            new THREE.Vector3(-190,40,200),
+            new THREE.Vector3(-200, 35, 200)
+            //new THREE.Vector3(0,-55,-200)
+        ]);
+        var tubeGeo6 = new THREE.TubeGeometry(path6, 30, 2, 30, false, true);
+        var fs4 = new THREE.Mesh(
+            tubeGeo6,
+            new THREE.MeshLambertMaterial( { color: 0x00ffff } )
+        );
+        floor_stand.add(fs1,fs2,fs3,fs4);
+        //sofa
+        sofa1 = new THREE.Mesh(
+            new THREE.CubeGeometry(200, 50, 95),                
+            new THREE.MeshPhongMaterial({color: 0xcd2691e})
+        );
+        sofa2 = new THREE.Mesh(
+            new THREE.CubeGeometry(200, 20, 100),                
+            new THREE.MeshPhongMaterial({color: 0xcd2691e})
+        );
+        sofa3 = new THREE.Mesh(//左の肘掛
+            new THREE.CubeGeometry(20, 60, 110),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa4 = new THREE.Mesh(
+            new THREE.CubeGeometry(20, 60, 110),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa5 = new THREE.Mesh(//後ろ
+            new THREE.CubeGeometry(200, 100, 10),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa6 = new THREE.Mesh(
+            new THREE.CylinderGeometry(10, 10,110, 30),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa7 = new THREE.Mesh(
+            new THREE.CylinderGeometry(10, 10,110, 30),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa8 = new THREE.Mesh(
+            new THREE.CylinderGeometry(40,40,10, 40),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa9 = new THREE.Mesh(
+            new THREE.CylinderGeometry(40,40,10, 40),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        sofa10 = new THREE.Mesh(
+            new THREE.CubeGeometry(123,79,10),                
+            new THREE.MeshPhongMaterial({color: 0xd2691e})
+        );
+        
+        sofa.add(sofa1,sofa2,sofa3,sofa4,sofa5,sofa6,sofa7,sofa8,sofa9,sofa10);
+        //テレビ
+        tv1 = new THREE.Mesh(
+            new THREE.CubeGeometry(100, 60, 50),                
+            new THREE.MeshLambertMaterial({color: 0xba55d3})
+        );
+        tv2 = new THREE.Mesh(
+            new THREE.CubeGeometry(60, 40, 10),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        tv3 = new THREE.Mesh(
+            new THREE.CubeGeometry(60, 10, 30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        tv4 = new THREE.Mesh(
+            new THREE.CylinderGeometry(5,5,20,30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        tv5 = new THREE.Mesh(
+            new THREE.CylinderGeometry(5,5,20,30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        tv6 = new THREE.Mesh(
+            new THREE.CylinderGeometry(5,5,20,30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        tv7 = new THREE.Mesh(
+            new THREE.CylinderGeometry(5,5,20,30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        var path4 = new THREE.SplineCurve3([
+            new THREE.Vector3(15,-25,-200),
+            new THREE.Vector3(10, -30, -200),
+            new THREE.Vector3(15,-35,-200),
+            new THREE.Vector3(5, -40, -200),
+            new THREE.Vector3(10, -50, -200),
+            new THREE.Vector3(0,-55,-200)
+        ]);
+        var tubeGeo4 = new THREE.TubeGeometry(path4, 30, 1, 30, false, true);
+        var tv8 = new THREE.Mesh(
+            tubeGeo4,
+            new THREE.MeshLambertMaterial( { color: 0x000000 } )
+        );
+        var path5 = new THREE.SplineCurve3([
+            new THREE.Vector3(-15,-25,-200),
+            new THREE.Vector3(-10, -30, -200),
+            new THREE.Vector3(-15,-35,-200),
+            new THREE.Vector3(-5, -40, -200),
+            new THREE.Vector3(-10, -50, -200),
+            new THREE.Vector3(0,-55,-200)
+        ]);
+        var tubeGeo5 = new THREE.TubeGeometry(path5, 30, 1, 30, false, true);
+        var tv9 = new THREE.Mesh(
+            tubeGeo5,
+            new THREE.MeshLambertMaterial( { color: 0x000000 } )
+        );
+        var tv10 = new THREE.Mesh(
+            new THREE.SphereGeometry(5,5,30,30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+        var tv11 = new THREE.Mesh(
+            new THREE.SphereGeometry(5,5,30,30),                
+            new THREE.MeshLambertMaterial({color: 0x7b68ee})
+        );
+
+        tv.add(tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8,tv9,tv10,tv11);
+        //marge
+        face = new THREE.Mesh(
+            new THREE.CylinderGeometry(14, 14, 20, 40),                
+            new THREE.MeshLambertMaterial({color: 0xffd700}) 
+        );
+        mouse1 = new THREE.Mesh(
+            new THREE.CylinderGeometry(10, 14, 4, 40),                
+            new THREE.MeshLambertMaterial({color: 0xffd700}) 
+        );
+        mouse2 = new THREE.Mesh(
+            new THREE.CylinderGeometry(14, 8, 5, 40),               
+            new THREE.MeshLambertMaterial({color: 0xffd700}) 
+        );
+        neck = new THREE.Mesh(
+            new THREE.CylinderGeometry(8, 8, 20, 40),                
+            new THREE.MeshLambertMaterial({color: 0xffd700}) 
+        );
+        l_eye = new THREE.Mesh(
+            new THREE.SphereGeometry(7,30,30),
+            new THREE.MeshLambertMaterial({color: 0xffffff})
+        );
+        r_eye = new THREE.Mesh(
+            new THREE.SphereGeometry(7,30,30),
+            new THREE.MeshLambertMaterial({color: 0xffffff})
+        );
+        lb_eye = new THREE.Mesh(
+            new THREE.SphereGeometry(1,30,30),
+            new THREE.MeshLambertMaterial({color: 0x000000})
+        );
+        rb_eye = new THREE.Mesh(
+            new THREE.SphereGeometry(1,30,30),
+            new THREE.MeshLambertMaterial({color: 0x000000})
+        );
+        nose = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,2,7,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        nose2 = new THREE.Mesh(
+            new THREE.SphereGeometry(2,30,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        shoulder = new THREE.Mesh(
+            new THREE.CylinderGeometry(8,13,10,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        dress = new THREE.Mesh(
+            new THREE.CylinderGeometry(13,13,80,30),
+            new THREE.MeshLambertMaterial({color: 0x7fffd4})
+        );
+        l_ear = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,4,4,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        r_ear = new THREE.Mesh(
+            new THREE.CylinderGeometry(2,4,4,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        var path1 = new THREE.SplineCurve3([
+            new THREE.Vector3(-10, -30, 0),
+            new THREE.Vector3(-30, -40, 0),
+            new THREE.Vector3(-10, -55, 0),
+        ]);
+        var tubeGeo1 = new THREE.TubeGeometry(path1, 32, 4, 30, false, true);
+        var r_arm = new THREE.Mesh(
+            tubeGeo1,
+            new THREE.MeshLambertMaterial( { color: 0xffd700 } )
+        );
+        var path2 = new THREE.SplineCurve3([
+            new THREE.Vector3(10, -30, 0),
+            new THREE.Vector3(25, -45, 0),
+            new THREE.Vector3(35, -25, 0),
+        ]);
+        var tubeGeo2 = new THREE.TubeGeometry(path2, 32, 4, 30, false, true);
+        var l_arm = new THREE.Mesh(
+            tubeGeo2,
+            new THREE.MeshLambertMaterial( { color: 0xffd700 } )
+        );
+        var path3 = new THREE.SplineCurve3([
+            new THREE.Vector3(0, -30, 0),
+            new THREE.Vector3(10*Math.cos(0), -70, 10*Math.sin(0)),
+            new THREE.Vector3(0, -110, 0),
+        ]);
+        var tubeGeo3 = new THREE.TubeGeometry(path3, 30, 13, 30, false, true);
+        var body = new THREE.Mesh(
+            tubeGeo3,
+            new THREE.MeshLambertMaterial( { color: 0x7fffd4 } )
+        );
+        l_leg = new THREE.Mesh(
+            new THREE.CylinderGeometry(4,4,20,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        r_leg = new THREE.Mesh(
+            new THREE.CylinderGeometry(4,4,20,30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        l_shoe = new THREE.Mesh(
+            new THREE.CubeGeometry(7,4,10),
+            new THREE.MeshLambertMaterial({color: 0xff4500})
+        );
+        r_shoe = new THREE.Mesh(
+            new THREE.CubeGeometry(7,4,10),
+            new THREE.MeshLambertMaterial({color: 0xff4500})
+        );
+        l_heel = new THREE.Mesh(
+            new THREE.CubeGeometry(4,4,4),
+            new THREE.MeshLambertMaterial({color: 0xff4500})
+        );
+        r_heel = new THREE.Mesh(
+            new THREE.CubeGeometry(4,4,4),
+            new THREE.MeshLambertMaterial({color: 0xff4500})
+        );
+        hand = new THREE.Mesh(
+            new THREE.CylinderGeometry(6,4, 5, 30),
+            new THREE.MeshLambertMaterial({color: 0xffd700})
+        );
+        //ドーナツ
+        dough = new THREE.Mesh(
+            new THREE.TorusGeometry(60, 20, 30, 30),
+            new THREE.MeshLambertMaterial({color: 0xdaa520})
+        );
+        pink = new THREE.Mesh(
+            new THREE.TorusGeometry(60, 20, 30, 30),
+            new THREE.MeshLambertMaterial({color: 0xff69b4})
+        );
+        
+        
+        donut.add(dough,pink);
+        for(var i=0; i<9; i++){
+            blue[i] = new THREE.Mesh(
+                new THREE.CylinderGeometry(1,1,4.5,20),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            yellow[i] = new THREE.Mesh(
+                new THREE.CylinderGeometry(1,1,4.5,20),
+                new THREE.MeshLambertMaterial({color: 0xffff00})
+            );
+            green[i] = new THREE.Mesh(
+                new THREE.CylinderGeometry(1,1,4.5,20),
+                new THREE.MeshLambertMaterial({color: 0x00ff7f})
+            );
+            white[i] = new THREE.Mesh(
+                new THREE.CylinderGeometry(1,1,4.5,20),
+                new THREE.MeshLambertMaterial({color: 0xffffff})
+            );
+            donut.add(blue[i],yellow[i],green[i],white[i]);
+            blue[i].position.set(63*Math.cos(i)+30,-48,63*Math.sin(i));
+            blue[i].rotation.set(Math.PI/2,0,Math.PI/i);
+            yellow[i].position.set(-52*Math.cos(i+1/4)+30,-48,-52*Math.sin(i+1/4));
+            yellow[i].rotation.set(Math.PI/2,0,Math.PI/i);
+            green[i].position.set(61*Math.cos(i+2/4)+30,-48,61*Math.sin(i+2/4));
+            green[i].rotation.set(Math.PI/2,0,Math.PI/i);
+            white[i].position.set(-58*Math.cos(i+3/4)+30,-48,-58*Math.sin(i+3/4));
+            white[i].rotation.set(Math.PI/2,0,Math.PI/i);
+        }
+        for(var i=0; i<10; i++){
+            eyelash[i] = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.1,0.1,2,20),
+                new THREE.MeshLambertMaterial({color: 0x000000})
+            );
+            marge.add(eyelash[i]);
+        }
+        for(var i=0; i<16; i++){
+            hair1[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair2[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair3[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair4[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair5[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair6[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair7[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair8[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair9[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair10[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            neckless[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(2,30,30),
+                new THREE.MeshLambertMaterial({color: 0xff4500})
+            );
+            marge.add(hair1[i],hair2[i],hair3[i],hair4[i],hair5[i],hair6[i],hair7[i],hair8[i],hair9[i],hair10[i],neckless[i]);
+            hair1[i].position.set(12.6*Math.cos(i/5*2),15,12.6*Math.sin(i/5*2));
+            hair2[i].position.set(12.6*Math.cos(i/5*2+1/2),20,12.6*Math.sin(i/5*2+1/2));
+            hair3[i].position.set(12.6*Math.cos(i/5*2),25,12.6*Math.sin(i/5*2));
+            hair4[i].position.set(12.6*Math.cos(i/5*2+1/2),30,12.6*Math.sin(i/5*2+1/2));
+            hair5[i].position.set(12.6*Math.cos(i/5*2),35,12.6*Math.sin(i/5*2));
+            hair6[i].position.set(12*Math.cos(i/5*2+1/2),40,12*Math.sin(i/5*2+1/2));
+            hair7[i].position.set(10*Math.cos(i/5*2),45,10*Math.sin(i/5*2));
+            hair8[i].position.set(8*Math.cos(i/5*2+1/2),50,8*Math.sin(i/5*2+1/2));
+            hair9[i].position.set(6*Math.cos(i/5*2),52,6*Math.sin(i/5*2));
+            hair10[i].position.set(4*Math.cos(i/5*2+1/2),52,4*Math.sin(i/5*2+1/2));
+            neckless[i].position.set(8*Math.cos(i/5*2),-20,8*Math.sin(i/5*2));
+        }
+        for(var i=0;i<10;i++){
+            hair11[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair12[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair13[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            hair14[i] = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5,30,30),
+                new THREE.MeshLambertMaterial({color: 0x00bfff})
+            );
+            marge.add(hair11[i],hair12[i],hair13[i],hair14[i]);
+            hair11[i].position.set(12.6*Math.cos(i/5*2-1/8),10,12.6*Math.sin(i/5*2-1/8));
+            hair12[i].position.set(12.6*Math.cos(i/5*2-1/8),5,12.6*Math.sin(i/5*2-1/8));
+            hair13[i].position.set(12.6*Math.cos(i/5*2-1/8),0,12.6*Math.sin(i/5*2-1/8));
+            hair14[i].position.set(12.6*Math.cos(i/5*2-1/8),-5,12.6*Math.sin(i/5*2-1/8));
+        }
+        cube = new THREE.Mesh(
+        new THREE.CubeGeometry(10,10,10),
+        new THREE.MeshLambertMaterial({color:0xff0000})
+        );
+        
+        marge.add(face, l_eye, r_eye,lb_eye,rb_eye,nose,nose2,neck,mouse1,mouse2,neck,shoulder,dress,l_ear,r_ear,l_arm,r_arm,l_leg,r_leg,l_shoe,r_shoe,l_heel,r_heel,hand/*,body*/);
+        background.add(floor,tv,pink_floor,purple_floor,yellow_floor,wall1/*,wall2*/);
+        scene.add(marge,donut,background,sofa,floor_stand,picture,table,table_stand,phone);
+        wall1.position.set(0,20,295);
+        wall2.position.set(-295,20,0);
+        floor.position.set(0,-135,0);
+        pink_floor.position.set(0,-130,0);
+        purple_floor.position.set(0,-129,0);
+        yellow_floor.position.set(0,-128,0);
+        phone1.position.set(130,-65,220);
+        phone2.position.set(130,-59,220);
+        phone2.rotation.x = -Math.PI/8;
+        phone3.position.set(130,-60,230);
+        phone4.position.set(130,-62,220);
+        phone5.position.set(130,-50,228);
+        phone5.rotation.z = Math.PI/2;
+        phone6.position.set(148,-50,228);
+        phone7.position.set(113,-50,228);
+        button[0].position.set(135,-56,220);
+        button[0].rotation.x = -Math.PI/8;
+        button[1].position.set(130,-56,220);
+        button[1].rotation.x = -Math.PI/8;
+        button[2].position.set(125,-56,220);
+        button[2].rotation.x = -Math.PI/8;
+        button[3].position.set(135,-58,215);
+        button[3].rotation.x = -Math.PI/8;
+        button[4].position.set(130,-58,215);
+        button[4].rotation.x = -Math.PI/8;
+        button[5].position.set(125,-58,215);
+        button[5].rotation.x = -Math.PI/8;
+        button[6].position.set(135,-60,210);
+        button[6].rotation.x = -Math.PI/8;
+        button[7].position.set(130,-60,210);
+        button[7].rotation.x = -Math.PI/8;
+        button[8].position.set(125,-60,210);
+        button[8].rotation.x = -Math.PI/8;
+        ts1.position.set(155,-55,245);
+        ts2.position.set(155,-39.1,245);
+        ts3.position.set(155,-30,245);
+        ts4.position.set(155,-5,245);
+        table1.position.set(140,-70,240);
+        table2.position.set(140,-100,275);
+        table3.position.set(162,-100,240);
+        table4.position.set(117,-100,240);
+        table5.position.set(139.5,-80,207.5);
+        table6.position.set(139.5,-125,237.5);
+        table11.position.set(140,-82,206);
+        table11.rotation.x = Math.PI/2;
+        table12.position.set(139.5,-90,208);
+        book1.position.set(127.9,-110,220);
+        book1.rotation.z = Math.PI/8;
+        book2.position.set(132.9,-110,220);
+        book2.rotation.z = Math.PI/8;
+        book3.position.set(137,-110,220);
+        book3.rotation.z = Math.PI/8;
+        fs1.position.set(-163,30,200);
+        //st1.rotation.set(0,0,Math.PI/6);
+        fs2.position.set(-200,-45,200);
+        fs3.position.set(-200,-127,200);
+        frame1.position.set(0,30,280);
+        frame2.position.set(0,100,280);
+        frame3.position.set(55,60,280);
+        frame4.position.set(-55,60,280);
+        pic1.position.set(0,65,285);
+        pic2.position.set(0,40,284.9);
+        pic3.position.set(0,57.5,284.9);
+        pic4.position.set(0,75,284.9);
+        pic7.position.set(35,85,284.8);
+        pic7.rotation.x = Math.PI;
+        pic8.position.set(40,83,284.8);
+        pic8.rotation.x = Math.PI;
+        pic9.position.set(30,83,284.8);
+        pic9.rotation.x = Math.PI;
+        pic10.position.set(-35,83,284.8);
+        pic10.rotation.x = Math.PI;
+        pic11.position.set(-30,85,284.8);
+        pic11.rotation.x = Math.PI;
+        pic12.position.set(-40,83,284.8);
+        pic12.rotation.x = Math.PI;
+        sofa1.position.set(0,-110,230);
+        sofa2.position.set(0,-90,230);
+        sofa3.position.set(100,-100,230);
+        sofa4.position.set(-100,-100,230);
+        sofa5.position.set(0,-90,280);
+        sofa6.position.set(100,-70,230);
+        sofa6.rotation.set(Math.PI/2,0,0);
+        sofa7.position.set(-100,-70,230);
+        sofa7.rotation.set(Math.PI/2,0,0);
+        sofa8.position.set(60,-40,280);
+        sofa8.rotation.set(Math.PI/2,0,0);
+        sofa9.position.set(-60,-40,280);
+        sofa9.rotation.set(Math.PI/2,0,0);
+        sofa10.position.set(0,-39.6,280);
+        tv1.position.set(0,-90,-200);
+        tv2.position.set(0,-90,-230);
+        tv3.position.set(0,-60,-200);
+        tv4.position.set(40,-120,-215);
+        tv5.position.set(-40,-120,-215);
+        tv6.position.set(40,-120,-185);
+        tv7.position.set(-40,-120,-185);
+        tv10.position.set(17,-25,-200);
+        tv11.position.set(-17,-25,-200);
+        dough.position.set(30,-70,0);
+        dough.rotation.set(Math.PI/2,0,0)
+        pink.position.set(30,-68,0);
+        pink.rotation.set(Math.PI/2,0,0)
+        face.position.set(0,5,0);
+        mouse1.position.set(1,-5,-4);
+        //mouse1.rotation.set(-Math.PI/10,0,0);
+        mouse2.position.set(0,-10,0);
+        //mouse2.rotation.set(-Math.PI/7,0,0);
+        neck.position.set(0,-15,0);
+        l_eye.position.set(5,5,-8);
+        r_eye.position.set(-3,5,-9);
+        lb_eye.position.set(7,5,-15);
+        rb_eye.position.set(-5,5,-16);
+        nose.position.set(2,0,-14);
+        nose.rotation.set(Math.PI/2,0,0);
+        nose2.position.set(2,0,-17.2);
+        shoulder.position.set(0,-25,0);
+        dress.position.set(0,-70,0)
+        l_ear.position.set(14,0,-3);
+        l_ear.rotation.set(Math.PI/2,0,0);
+        r_ear.position.set(-13,0,-5.7);
+        r_ear.rotation.set(Math.PI/2,0,0);
+        eyelash[0].position.set(12,9,-9);
+        eyelash[0].rotation.set(0,0,-Math.PI/6);
+        eyelash[1].position.set(9,11,-11);
+        eyelash[1].rotation.set(0,0,-Math.PI/8);
+        eyelash[2].position.set(6,11,-13.5);
+        eyelash[2].rotation.set(0,0,Math.PI/8);
+        eyelash[3].position.set(3,9.7,-14);
+        eyelash[3].rotation.set(0,0,Math.PI/6);
+        eyelash[4].position.set(0,9.7,-14);
+        eyelash[4].rotation.set(0,0,-Math.PI/6);
+        eyelash[5].position.set(-2.5,11,-14);
+        eyelash[5].rotation.set(0,0,-Math.PI/8);
+        eyelash[6].position.set(-5.5,11,-13.5);
+        eyelash[6].rotation.set(0,0,Math.PI/8);
+        eyelash[7].position.set(-8,10,-13.5);
+        eyelash[7].rotation.set(0,0,Math.PI/6);
+        //l_arm.position.set(14,-43,-4);
+        //r_arm.position.set(-11,-43,-7);
+        l_leg.position.set(8,-110,0);
+        r_leg.position.set(-6.5,-110,0);
+        l_shoe.position.set(8,-121,-1);
+        l_shoe.rotation.set(-Math.PI/6,0,0);
+        r_shoe.position.set(-6.5,-120,0);
+        r_shoe.rotation.set(-Math.PI/6,0,0);
+        l_heel.position.set(8,-122,2);
+        r_heel.position.set(-6.5,-122,2);
+        hand.position.set(35,-27,0);
+        hand.rotation.set(0,0,-Math.PI/8);
+    }
+    var t=0;
+    function loop(){  
+        t++;
+        //marge.rotation.set(0, t/100, 0);
+        donut.position.set(30*Math.cos(t/20)-30, 0, 30*Math.sin(t/20));
+        /*if(10-t>-100){
+            //donut.position.set(-50,10-t,0);
+            donut.position.set(-50,100*Math.cos(t/20), 100*Math.sin(t/20)-50);
+        }else{
+            donut.position.set(-50,-100,0);
+        }*/
+        /*camera.position.x = 1000*Math.cos(t/100);
+        camera.position.z = 1000*Math.sin(t/100);
+        camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );*/
+        window.requestAnimationFrame(loop);
+        
+        renderer.clear();
+        
+        
+        renderer.render(scene, camera);
+        
+        
+    }
+    
+    function threeStart() {
+        initThree();
+        initCamera();
+        initScene();
+        initLight();
+        initObject();
+        //renderer.clear();
+        //renderer.render(scene, camera);
+        loop();
+        
+    }
+</script>
+</head>
+
+<body onload="threeStart();">
+    <input type="button" value="視点を変える" onclick="Right()">
+    
+    <div id="canvas-frame"></div>
+</body>
+</html>
