@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         light4.position.set(-500, 1500, -500);
 
         scene.add(light);
-        scene.add(light2);
+        // scene.add(light2);
         scene.add(light3);
-        scene.add(light4);
+        // scene.add(light4);
     }
 
     function initObject() {
