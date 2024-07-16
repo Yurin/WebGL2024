@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor]);
+        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor,tv1,tv2]);
 
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
@@ -200,8 +200,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 showMessage('床ですね。');
             } else if (intersectedObject === wall1 || intersectedObject === wall2 || intersectedObject === wall3 || intersectedObject === wall4) {
                 showMessage('壁ですよ。');
-            } else {
+            } else if(intersectedObject === sofa1 || intersectedObject === sofa2 || intersectedObject === sofa3 || intersectedObject === sofa4 || intersectedObject === sofa5 || intersectedObject === sofa6 || intersectedObject === sofa7){
                 showMessage('ソファーですね。');
+            }
+            else{
+                showMessage('なにかありました？')
             }
         }
     }
