@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let canvas, renderer, camera, scene, light, light2, light3, light4;
     let wall1, wall2, wall3, wall4, floor, carpet;
     let sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7;
-    let tv1,tv2;
+    let tv1,tv2,tv_chest;
     let a, b, c;
     let target;
     let messageDisplayed = false;
@@ -40,11 +40,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         light3.position.set(500, 1500, 500);
         light4 = new THREE.PointLight(0xcccccc, 1.0);
         light4.position.set(-500, 1500, -500);
+        light5 = new THREE.PointLight(0xcccccc, 1.0);
+        light5.position.set(1500, 0, 300);
+        light6 = new THREE.PointLight(0xcccccc, 0.5);
+        light6.position.set(500, -200, 200);
 
         scene.add(light);
         // scene.add(light2);
         scene.add(light3);
         // scene.add(light4);
+        //scene.add(light5);
+        scene.add(light6);
     }
 
     function initObject() {
@@ -78,43 +84,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new THREE.MeshBasicMaterial({ color: 0xffa0cb })
         );
 
-        tv1= new THREE.Mesh(//left
+        tv1= new THREE.Mesh(
             new THREE.BoxGeometry(5,800,1200),
-            new THREE.MeshBasicMaterial({ color: 0x000000 })
+            new THREE.MeshPhongMaterial({ color: 0x696969 })
         )
 
         tv2 = new THREE.Mesh(//left
             new THREE.BoxGeometry(5,700,1100),
-            new THREE.MeshBasicMaterial({ color: 0xd2391e })
+            new THREE.MeshBasicMaterial({ color: 0xb0c4de })
+        )
+
+        tv_chest = new THREE.Mesh(
+            new THREE.BoxGeometry(400,100,1000),
+            new THREE.MeshPhongMaterial({ color: 0xdeb887 })
         )
 
         sofa1 = new THREE.Mesh(
             new THREE.BoxGeometry(1000, 200, 500),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xbc8f8f})
         );
         sofa2 = new THREE.Mesh(
             new THREE.BoxGeometry(1000, 200, 500),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xffdab9})
         );
         sofa3 = new THREE.Mesh(
             new THREE.BoxGeometry(100, 500, 530),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
         );
         sofa4 = new THREE.Mesh(
             new THREE.BoxGeometry(100, 500, 530),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xbc8f8f})
         );
         sofa5 = new THREE.Mesh(
             new THREE.CylinderGeometry(50, 50, 530, 150),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
         );
         sofa6 = new THREE.Mesh(
             new THREE.CylinderGeometry(50, 50, 530, 150),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
         );
         sofa7 = new THREE.Mesh(
             new THREE.CylinderGeometry(500, 500, 50, 200),
-            new THREE.MeshPhongMaterial({ color: 0xd2691e })
+            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
         );
 
         floor.position.set(0, -500, 0);
@@ -128,16 +139,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         tv1.position.set(1490,500,300);
         tv2.position.set(1480,500,300);
+        tv_chest.position.set(900,-50,0);
 
-        scene.add(tv1,tv2);
+        scene.add(tv1,tv2,tv_chest);
 
         sofa1.position.set(0, -450, 1300);
         sofa2.position.set(0, -250, 1300);
         sofa3.position.set(500, -200, 1300);
         sofa4.position.set(-500, -200, 1300);
-        sofa5.position.set(500, 70, 1300);
+        sofa5.position.set(500, 60, 1300);
         sofa5.rotation.set(Math.PI / 2, 0, 0);
-        sofa6.position.set(-500, 70, 1300);
+        sofa6.position.set(-500, 60, 1300);
         sofa6.rotation.set(Math.PI / 2, 0, 0);
         sofa7.position.set(0, 0, 1500);
         sofa7.rotation.set(Math.PI / 2, 0, 0);
@@ -192,7 +204,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor,tv1,tv2]);
+        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest]);
 
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
@@ -202,6 +214,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 showMessage('壁ですよ。');
             } else if(intersectedObject === sofa1 || intersectedObject === sofa2 || intersectedObject === sofa3 || intersectedObject === sofa4 || intersectedObject === sofa5 || intersectedObject === sofa6 || intersectedObject === sofa7){
                 showMessage('ソファーですね。');
+            } else if(intersectedObject === tv1 || intersectedObject === tv2){
+                showMessage('TVですね。');
             }
             else{
                 showMessage('なにかありました？')
