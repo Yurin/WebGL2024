@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let canvas, renderer, camera, scene, light, light2, light3, light4;
     let wall1, wall2, wall3, wall4, floor, carpet;
     let sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7;
+    let tv1,tv2;
     let a, b, c;
     let target;
     let messageDisplayed = false;
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new THREE.MeshBasicMaterial({ color: 0xffa0cb })
         );
 
-        wall1 = new THREE.Mesh(
+        wall1 = new THREE.Mesh(//front
             new THREE.BoxGeometry(3000, 3000, 10),
             new THREE.MeshBasicMaterial({ color: 0xffa0cb })
         );
@@ -72,10 +73,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new THREE.MeshBasicMaterial({ color: 0xffc0cb })
         );
 
-        wall4 = new THREE.Mesh(
+        wall4 = new THREE.Mesh(//back
             new THREE.BoxGeometry(3000, 3000, 10),
             new THREE.MeshBasicMaterial({ color: 0xffa0cb })
         );
+
+        tv1= new THREE.Mesh(//left
+            new THREE.BoxGeometry(5,800,1200),
+            new THREE.MeshBasicMaterial({ color: 0x000000 })
+        )
+
+        tv2 = new THREE.Mesh(//left
+            new THREE.BoxGeometry(5,700,1100),
+            new THREE.MeshBasicMaterial({ color: 0xd2391e })
+        )
 
         sofa1 = new THREE.Mesh(
             new THREE.BoxGeometry(1000, 200, 500),
@@ -114,6 +125,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         wall4.position.set(0, 0, -1500);
 
         scene.add(wall1, wall2, wall3, wall4, floor, carpet);
+
+        tv1.position.set(1490,500,300);
+        tv2.position.set(1480,500,300);
+
+        scene.add(tv1,tv2);
 
         sofa1.position.set(0, -450, 1300);
         sofa2.position.set(0, -250, 1300);
