@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let wall1, wall2, wall3, wall4, floor, carpet;
     let sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7;
     let tv1,tv2,tv_chest;
+    let cube;
     let a, b, c;
     let target;
     let messageDisplayed = false;
@@ -99,6 +100,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new THREE.MeshToonMaterial({ color: 0xbc8f8f })
         )
 
+        cube = new THREE.Mesh(
+            new THREE.BoxGeometry(50,50,50),
+            new THREE.MeshToonMaterial({ color: 0x000000 })
+        )
+
         sofa1 = new THREE.Mesh(
             new THREE.BoxGeometry(1000, 200, 500),
             new THREE.MeshLambertMaterial({ color: 0xbc8f8f})
@@ -140,8 +146,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         tv1.position.set(1490,500,300);
         tv2.position.set(1480,500,300);
         tv_chest.position.set(900,-50,0);
+        cube.position.set(800,50,100);
 
-        scene.add(tv1,tv2,tv_chest);
+        scene.add(tv1,tv2,tv_chest,cube);
 
         sofa1.position.set(0, -450, 1300);
         sofa2.position.set(0, -250, 1300);
@@ -204,7 +211,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest]);
+        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest, cube]);
 
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
@@ -216,6 +223,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 showMessage('ソファーですね。');
             } else if(intersectedObject === tv1 || intersectedObject === tv2){
                 showMessage('TVですね。');
+            } else if(intersectedObject === cube){
+                showMessage('cubeを見つけた。');
+                
             }
             else{
                 showMessage('なにかありました？')
