@@ -56,32 +56,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function initObject() {
         floor = new THREE.Mesh(
             new THREE.BoxGeometry(3000, 10, 3000),
-            new THREE.MeshLambertMaterial({ color: 0xf5f9e9 })
+            new THREE.MeshLambertMaterial({ color: 0x726250 })
         );
 
         carpet = new THREE.Mesh(
             new THREE.CylinderGeometry(1000, 500, 1, 40),
-            new THREE.MeshBasicMaterial({ color: 0xffa0cb })
+            new THREE.MeshPhongMaterial({ color: 0xffa3ff })
         );
 
         wall1 = new THREE.Mesh(//front
             new THREE.BoxGeometry(3000, 3000, 10),
-            new THREE.MeshBasicMaterial({ color: 0xffa0cb })
+            new THREE.MeshBasicMaterial({ color: 0xffdead })
         );
 
         wall2 = new THREE.Mesh(
             new THREE.BoxGeometry(10, 3000, 3000),
-            new THREE.MeshBasicMaterial({ color: 0xffc0cb })
+            new THREE.MeshBasicMaterial({ color: 0xfff8dc})
         );
 
         wall3 = new THREE.Mesh(
             new THREE.BoxGeometry(10, 3000, 3000),
-            new THREE.MeshBasicMaterial({ color: 0xffc0cb })
+            new THREE.MeshBasicMaterial({ color: 0xfff8dc })
         );
 
         wall4 = new THREE.Mesh(//back
             new THREE.BoxGeometry(3000, 3000, 10),
-            new THREE.MeshBasicMaterial({ color: 0xffa0cb })
+            new THREE.MeshBasicMaterial({ color: 0xffdead })
         );
 
         tv1= new THREE.Mesh(
@@ -91,41 +91,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         tv2 = new THREE.Mesh(//left
             new THREE.BoxGeometry(5,700,1100),
-            new THREE.MeshBasicMaterial({ color: 0xb0c4de })
+            new THREE.MeshNormalMaterial({ color: 0xbcffbc })
         )
 
         tv_chest = new THREE.Mesh(
             new THREE.BoxGeometry(400,100,1000),
-            new THREE.MeshPhongMaterial({ color: 0xdeb887 })
+            new THREE.MeshToonMaterial({ color: 0xbc8f8f })
         )
 
         sofa1 = new THREE.Mesh(
             new THREE.BoxGeometry(1000, 200, 500),
-            new THREE.MeshPhongMaterial({ color: 0xbc8f8f})
+            new THREE.MeshLambertMaterial({ color: 0xbc8f8f})
         );
         sofa2 = new THREE.Mesh(
             new THREE.BoxGeometry(1000, 200, 500),
-            new THREE.MeshPhongMaterial({ color: 0xffdab9})
+            new THREE.MeshLambertMaterial({ color: 0xffdab9})
         );
         sofa3 = new THREE.Mesh(
             new THREE.BoxGeometry(100, 500, 530),
-            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
+            new THREE.MeshLambertMaterial({ color: 0xbc8f8f })
         );
         sofa4 = new THREE.Mesh(
             new THREE.BoxGeometry(100, 500, 530),
-            new THREE.MeshPhongMaterial({ color: 0xbc8f8f})
+            new THREE.MeshLambertMaterial({ color: 0xbc8f8f})
         );
         sofa5 = new THREE.Mesh(
             new THREE.CylinderGeometry(50, 50, 530, 150),
-            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
+            new THREE.MeshLambertMaterial({ color: 0xbc8f8f })
         );
         sofa6 = new THREE.Mesh(
             new THREE.CylinderGeometry(50, 50, 530, 150),
-            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
+            new THREE.MeshLambertMaterial({ color: 0xbc8f8f })
         );
         sofa7 = new THREE.Mesh(
             new THREE.CylinderGeometry(500, 500, 50, 200),
-            new THREE.MeshPhongMaterial({ color: 0xbc8f8f })
+            new THREE.MeshLambertMaterial({ color: 0xbc8f8f })
         );
 
         floor.position.set(0, -500, 0);
