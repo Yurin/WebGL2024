@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     let canvas, renderer, camera, scene, light, light2, light3, light4;
     let wall1, wall2, wall3, wall4, floor, carpet;
+    let door,knob;
     let sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7;
     let tv1, tv2, tv_chest;
     let cube;
@@ -82,6 +83,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new THREE.MeshBasicMaterial({ color: 0xffdead })
         );
 
+        door = new THREE.Mesh( //back
+            new THREE.BoxGeometry(10, 1500, 800),
+            new THREE.MeshBasicMaterial({ color: 0x726250 })
+        );
+        knob = new THREE.Mesh( //back
+            new THREE.BoxGeometry(50, 50, 50),
+            new THREE.MeshBasicMaterial({ color: 0xffdead })
+        );
+
         tv1 = new THREE.Mesh(
             new THREE.BoxGeometry(5, 800, 1200),
             new THREE.MeshPhongMaterial({ color: 0x696969 })
@@ -137,8 +147,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         wall2.position.set(-1500, 0, 0);
         wall3.position.set(1500, 0, 0);
         wall4.position.set(0, 0, -1500);
+        door.position.set(-1490,0,0)
+        knob.position.set(-1450,0,-300)
 
-        scene.add(wall1, wall2, wall3, wall4, floor, carpet);
+        scene.add(wall1, wall2, wall3, wall4, floor, carpet,door,knob);
 
         tv1.position.set(1490, 500, 300);
         tv2.position.set(1480, 500, 300);
@@ -208,7 +220,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest, cube]);
+        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest, cube, door, knob]);
 
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
@@ -223,7 +235,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             } else if (intersectedObject === cube) {
                 showMessage('cubeを見つけた。同じ色を消していこう.詰まったらシャッフルボタンをクリック');
                 loadPuzzleGame();
-            } else {
+            } else if (intersectedObject === door || intersectedObject === knob) {
+                showMessage('どあだ！！');
+            } 
+            else {
                 showMessage('なにかありました？');
             }
         }
@@ -412,13 +427,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         
                 if (!selectedPiece) {
                     selectedPiece = selectedObject;
-                    selectedPiece.userData.originalMaterial = selectedPiece.material; // 保存原始材质
-                    selectedPiece.material = createSparkleMaterial(selectedPiece.userData.color); // 应用闪烁材质
+                    selectedPiece.userData.originalMaterial = selectedPiece.material; 
+                    selectedPiece.material = createSparkleMaterial(selectedPiece.userData.color); 
                     return;
                 }
         
                 if (selectedPiece !== selectedObject) {
-                    selectedPiece.material = selectedPiece.userData.originalMaterial; // 恢复原始材质
+                    selectedPiece.material = selectedPiece.userData.originalMaterial; 
         
                     if (selectedPiece.userData.color === selectedObject.userData.color) {
                         puzzleScene.remove(selectedPiece);
@@ -428,8 +443,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         checkClear();
                     } else {
                         selectedPiece = selectedObject;
-                        selectedPiece.userData.originalMaterial = selectedPiece.material; // 保存原始材质
-                        selectedPiece.material = createSparkleMaterial(selectedPiece.userData.color); // 应用闪烁材质
+                        selectedPiece.userData.originalMaterial = selectedPiece.material; 
+                        selectedPiece.material = createSparkleMaterial(selectedPiece.userData.color); 
                     }
                 }
             }

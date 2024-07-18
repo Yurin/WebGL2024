@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="どういうわけか、あなたは鍵のかかった部屋に閉じ込められています。隠されたアイテムを見つけ、謎を解いてここから脱出しましょう。">
-    <title>escape game</title>
+    <title>Escape Game</title>
     <link rel="stylesheet" href="es.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -32,6 +32,14 @@
         <div id="puzzle_container">
             <!-- パズルゲーム表示用のコンテナ -->
             <canvas id="puzzleCanvas" width="1170" height="500"></canvas>
+            <div id="ui">
+                <button id="shuffleButton">色をシャッフルする</button>
+            </div>
+            <div class="play_text">
+                <h3>Cube発見！！</h3>
+                <p>3Dパズルゲームのルールは簡単です。同じ色のキューブをカーソルで選択して消していきましょう。</p>
+                <p>詰まったら「色をシャッフルする」ボタンをクリックして、パズルの色をランダムに変更できます。</p>         
+            </div>
         </div>
 
         <div class="play_text">
@@ -43,13 +51,10 @@
             </p>
         </div>
 
-        <div id="ui">
-            <button id="shuffleButton">色をシャッフルする</button>
-        </div>
     </main>
 
     <footer id="room_footer">
-        <small>Copyright &copy; Yurin's Room, all rights reserved.</small>
+        <small>Copyright &copy; YuriN's Room, all rights reserved.</small>
     </footer>
 
     <script src="escape3.js"></script> 
