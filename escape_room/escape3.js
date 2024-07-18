@@ -1,3 +1,7 @@
+//TODO
+//パズルのシャッフルの誤作動解決
+//鍵をゲットしたあとの分岐
+//クリア画面
 document.addEventListener('DOMContentLoaded', (event) => {
     let canvas, renderer, camera, scene, light, light2, light3, light4;
     let wall1, wall2, wall3, wall4, floor, carpet;
