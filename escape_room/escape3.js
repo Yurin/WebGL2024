@@ -1,13 +1,10 @@
-//TODO
-//パズルのシャッフルの誤作動解決
-//鍵をゲットしたあとの分岐
-//クリア画面
 document.addEventListener('DOMContentLoaded', (event) => {
     let canvas, renderer, camera, scene, light, light2, light3, light4;
     let wall1, wall2, wall3, wall4, floor, carpet;
-    let door,knob;
+    let door, knob;
     let sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7;
     let tv1, tv2, tv_chest;
+    let picture;
     let cube;
     let a, b, c;
     let target;
@@ -111,6 +108,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new THREE.MeshToonMaterial({ color: 0xbc8f8f })
         );
 
+        picture = new THREE.Mesh(
+            new THREE.BoxGeometry(500, 600, 5),
+            new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('donkey.png') })
+        );
+
         cube = new THREE.Mesh(
             new THREE.BoxGeometry(50, 50, 50),
             new THREE.MeshToonMaterial({ color: 0x000000 })
@@ -151,17 +153,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
         wall2.position.set(-1500, 0, 0);
         wall3.position.set(1500, 0, 0);
         wall4.position.set(0, 0, -1500);
-        door.position.set(-1490,0,0)
-        knob.position.set(-1450,0,-300)
+        door.position.set(-1490, 0, 0);
+        knob.position.set(-1450, 0, -300);
 
-        scene.add(wall1, wall2, wall3, wall4, floor, carpet,door,knob);
+        scene.add(wall1, wall2, wall3, wall4, floor, carpet, door, knob);
 
         tv1.position.set(1490, 500, 300);
         tv2.position.set(1480, 500, 300);
         tv_chest.position.set(900, -50, 0);
         cube.position.set(800, 50, 100);
+        picture.position.set(900, 500, 1490);
 
-        scene.add(tv1, tv2, tv_chest, cube);
+        scene.add(tv1, tv2, tv_chest, cube, picture);
 
         sofa1.position.set(0, -450, 1300);
         sofa2.position.set(0, -250, 1300);
@@ -224,23 +227,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest, cube, door, knob]);
+        const intersects = raycaster.intersectObjects([sofa1, sofa2, sofa3, sofa4, sofa5, sofa6, sofa7, wall1, wall2, wall3, wall4, floor, tv1, tv2, tv_chest, cube, picture, door, knob]);
 
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
             if (intersectedObject === floor) {
                 showMessage('床ですね。');
             } else if (intersectedObject === wall1 || intersectedObject === wall2 || intersectedObject === wall3 || intersectedObject === wall4) {
-                showMessage('壁ですよ。');
+                showMessage('もちろん壁です。');
             } else if (intersectedObject === sofa1 || intersectedObject === sofa2 || intersectedObject === sofa3 || intersectedObject === sofa4 || intersectedObject === sofa5 || intersectedObject === sofa6 || intersectedObject === sofa7) {
                 showMessage('ソファーですね。');
             } else if (intersectedObject === tv1 || intersectedObject === tv2) {
-                showMessage('TVですね。');
+                showMessage('TVです。');
             } else if (intersectedObject === cube) {
                 showMessage('cubeを見つけた。同じ色を消していこう.詰まったらシャッフルボタンをクリック');
                 loadPuzzleGame();
             } else if (intersectedObject === door || intersectedObject === knob) {
                 showMessage('どあだ！！');
+            } else if (intersectedObject === picture) {
+                showMessage('徽音祭で小籠包売ります！！東大ドンキーです！きてね！！');
             } 
             else {
                 showMessage('なにかありました？');
